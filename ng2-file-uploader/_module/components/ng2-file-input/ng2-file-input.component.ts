@@ -17,7 +17,7 @@ export class Ng2FileInputComponent implements OnInit {
   ngOnInit() {
   }
 
-  protected processSelectedFiles($event) {
+  processSelectedFiles($event) {
     Array.from($event.target.files).forEach((file: File) => {
         this.fileLoaded.emit(file);
     });

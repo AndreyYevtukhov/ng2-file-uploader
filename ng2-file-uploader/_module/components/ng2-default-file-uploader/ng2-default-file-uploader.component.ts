@@ -23,7 +23,7 @@ export class Ng2DefaultFileUploaderComponent implements ControlValueAccessor {
 
   public validationError: string;
   protected ng2FileBuilder = new Ng2FileBuilder();
-  protected uploadedFiles: Array<Ng2File>;
+  public uploadedFiles: Array<Ng2File>;
   protected ng2FileUploaderService: Ng2FileUploaderService;
   private errorTimer;
 
@@ -49,7 +49,7 @@ export class Ng2DefaultFileUploaderComponent implements ControlValueAccessor {
   propagateTouch(): void {
   }
 
-  protected uploadFile(file: File) {
+  uploadFile(file: File) {
     this.propagateTouch();
     this.hideFileError();
 
@@ -66,7 +66,7 @@ export class Ng2DefaultFileUploaderComponent implements ControlValueAccessor {
     }
   }
 
-  protected deleteFile(file: Ng2File) {
+  deleteFile(file: Ng2File) {
     this.propagateTouch();
 
     let fileIndex = this.uploadedFiles.indexOf(file);
