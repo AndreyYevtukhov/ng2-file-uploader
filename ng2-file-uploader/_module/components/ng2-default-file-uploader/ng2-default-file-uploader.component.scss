@@ -1,0 +1,14 @@
+::ng-deep .dragover {
+  border-color: #01579b !important;
+
+  // prevent pointer events if something is dragged over drop zone
+  label {
+    pointer-events: none;
+  }
+}
+
+.card {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  border: 2px dashed #ced4da;
+}

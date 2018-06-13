@@ -1,0 +1,24 @@
+<label class="mb-2"
+       *ngIf="config.isLabelShown"
+       [innerHTML]="config.labelHtml"></label>
+
+<!-- file input + drop zone -->
+<ng2-file-input ng2-file-drop-zone
+                class="card card-body text-center"
+                [config]="config.fileInputConfig"
+                (fileDropped)="uploadFile($event)"
+                (fileLoaded)="uploadFile($event)"></ng2-file-input>
+
+<!-- uploaded files block -->
+<div *ngIf="uploadedFiles && uploadedFiles.length > 0"
+     class="ng2-files d-flex flex-wrap mt-3">
+  <ng2-file-info
+    *ngFor="let uploadedFile of uploadedFiles"
+    [file]="uploadedFile"
+    (fileDeleted)="deleteFile($event)"></ng2-file-info>
+</div>
+
+<!-- uploaded file validation error -->
+<small *ngIf="validationError"
+       class="text-danger d-block">{{ validationError }}
+</small>

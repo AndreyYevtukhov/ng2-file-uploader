@@ -1,0 +1,11 @@
+<label class="mb-0"
+       [for]="config.inputId"
+       [innerHTML]="config.labelHtml"></label>
+
+<!-- hidden file input -->
+<input type="file"
+       class="d-none"
+       id="{{ config.inputId }}"
+       #fileInput
+       [multiple]="config.isMultiple"
+       (change)="processSelectedFiles($event)">
