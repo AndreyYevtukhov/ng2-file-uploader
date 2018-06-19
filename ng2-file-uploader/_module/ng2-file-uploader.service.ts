@@ -48,6 +48,8 @@ export class Ng2FileUploaderService {
    * @return {string}
    */
   validateFile(file: File, fileRequirements: IFileRequirements): string {
+    let fileExtension = file.name.split('.').pop();
+
     if (fileRequirements.minSizeBytes && file.size < fileRequirements.minSizeBytes.value) {
       return fileRequirements.minSizeBytes.errorMessage;
     }
@@ -58,6 +60,10 @@ export class Ng2FileUploaderService {
 
     if (fileRequirements.types && fileRequirements.types.value.indexOf(file.type) === -1) {
       return fileRequirements.types.errorMessage;
+    }
+
+    if (fileRequirements.extension && fileRequirements.extension.value.indexOf(fileExtension) === -1) {
+      return fileRequirements.extension.errorMessage;
     }
   }
 }

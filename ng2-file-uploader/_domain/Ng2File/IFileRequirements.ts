@@ -10,5 +10,9 @@ export interface IFileRequirements {
   types?: {
     value: Array<string>,
     errorMessage: string
+  },
+  extension: {
+    value: Array<string>,
+    errorMessage: string
   }
 }
