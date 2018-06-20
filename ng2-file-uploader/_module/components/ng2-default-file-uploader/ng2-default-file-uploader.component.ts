@@ -1,4 +1,4 @@
-import {Component, forwardRef, Injector, Input, OnInit, Type} from '@angular/core';
+import {Component, EventEmitter, forwardRef, Injector, Input, Output, OnInit, Type} from '@angular/core';
 import {Ng2File} from '../../../_domain/Ng2File/Ng2File';
 import {Ng2FileBuilder} from '../../../_domain/Ng2File/Ng2FileBuilder';
 import {NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms';
@@ -20,6 +20,7 @@ import {Ng2FileUploaderConfigBuilder} from '../../../_domain/Ng2Config/uploader/
 })
 export class Ng2DefaultFileUploaderComponent implements ControlValueAccessor {
   @Input('config') config: Ng2DefaultFileUploaderConfig = Ng2FileUploaderConfigBuilder.buildDefaultConfig();
+  @Output('selectedFile') selectedFile: EventEmitter<File> = new EventEmitter();
 
   public validationError: string;
   protected ng2FileBuilder = new Ng2FileBuilder();
@@ -50,6 +51,8 @@ export class Ng2DefaultFileUploaderComponent implements ControlValueAccessor {
   }
 
   uploadFile(file: File) {
+    this.selectedFile.emit(file);
+
     this.propagateTouch();
     this.hideFileError();
 
