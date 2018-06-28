@@ -7,6 +7,7 @@ import {Ng2DefaultFileUploaderConfig} from '../../../_domain/Ng2Config/uploader/
 import {Ng2FileUploaderConfigBuilder} from '../../../_domain/Ng2Config/uploader/Ng2FileUploaderConfigBuilder';
 import {INg2FileFactory} from "../../../_domain/Ng2FileFactory/INg2FileFactory";
 import {INg2File} from "../../../_domain/Ng2File/INg2File";
+import {INg2FileAdapter} from "../../../_domain/Ng2FileAdapter/INg2FileAdapter";
 
 @Component({
   selector: 'ng2-default-file-uploader',
@@ -20,22 +21,27 @@ import {INg2File} from "../../../_domain/Ng2File/INg2File";
     }
   ]
 })
-export class Ng2DefaultFileUploaderComponent implements ControlValueAccessor {
+export class Ng2DefaultFileUploaderComponent implements ControlValueAccessor, OnInit {
   @Input('config') config: Ng2DefaultFileUploaderConfig = Ng2FileUploaderConfigBuilder.buildDefaultConfig();
   @Output('selectedFile') selectedFile: EventEmitter<File> = new EventEmitter();
 
   public validationError: string;
   public uploadedFiles: Array<INg2File>;
   protected ng2FileFactory: INg2FileFactory;
+  protected ng2FileAdapter: INg2FileAdapter;
   protected ng2FileUploaderService: Ng2FileUploaderService;
   private errorTimer;
 
   constructor(injector: Injector) {
+    this.ng2FileUploaderService = injector.get<Ng2FileUploaderService>(Ng2FileUploaderService);
+  }
+
+  ngOnInit() {
     this.ng2FileFactory = (this.config.fileFactory)
       ? this.config.fileFactory
       : new Ng2FileFactory();
 
-    this.ng2FileUploaderService = injector.get<Ng2FileUploaderService>(Ng2FileUploaderService);
+    this.ng2FileAdapter = this.ng2FileFactory.createFileAdapter();
   }
 
   writeValue(files?: Array<Ng2File>): void {

@@ -4,7 +4,6 @@ import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import {Ng2AsyncFileUploaderConfig} from '../../../_domain/Ng2Config/uploader/async/Ng2AsyncFileUploaderConfig';
 import {HttpEventType, HttpResponse} from '@angular/common/http';
 import {Ng2File} from '../../../_domain/Ng2File/Ng2File';
-import {INg2FileAdapter} from "../../../_domain/Ng2FileAdapter/INg2FileAdapter";
 
 @Component({
   selector: 'ng2-default-async-file-uploader',
@@ -22,12 +21,8 @@ export class Ng2DefaultAsyncFileUploaderComponent extends Ng2DefaultFileUploader
   @Input('config') config: Ng2AsyncFileUploaderConfig;
   @Output('isFileProcessing') isFileProcessing: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  private ng2FileAdapter: INg2FileAdapter;
-
   constructor(injector: Injector) {
     super(injector);
-
-    this.ng2FileAdapter = this.ng2FileFactory.createFileAdapter();
   }
 
   protected addFile(file: File) {
@@ -50,6 +45,7 @@ export class Ng2DefaultAsyncFileUploaderComponent extends Ng2DefaultFileUploader
               this.isFileProcessing.emit(false);
               this.propagateChange(this.uploadedFiles);
             } catch (e) {
+              console.warn(e);
               this.processUploadError(newFile, newFileIndex);
             }
           }
