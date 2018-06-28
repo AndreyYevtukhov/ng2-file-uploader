@@ -1,5 +1,4 @@
 import {Directive, EventEmitter, HostBinding, HostListener, OnInit, Output} from '@angular/core';
-import {Ng2FileUploaderService} from '../../ng2-file-uploader.service';
 
 @Directive({
   selector: '[ng2-file-drop-zone]',

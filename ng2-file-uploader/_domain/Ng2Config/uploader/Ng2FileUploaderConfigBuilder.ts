@@ -45,5 +45,9 @@ export class Ng2FileUploaderConfigBuilder {
     config.fileRequirements = (data && data.fileRequirements)
       ? data.fileRequirements
       : {};
+
+    config.fileFactory = (data && data.fileFactory)
+      ? data.fileFactory
+      : null;
   }
 }

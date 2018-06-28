@@ -1,13 +1,10 @@
 import {IFileData} from './IFileData';
+import {INg2File} from "./INg2File";
 
-/**
- * represents Ng2File for uploader module
- * can store native File object
- */
-export class Ng2File implements IFileData {
-  private _loadingProgress: number = 0;
-  private _hash: string;
-  private _nativeFile: IFileData;
+export class Ng2File implements INg2File {
+  loadingProgress: number = 0;
+  hash: string;
+  nativeFile: IFileData;
 
   lastModifiedDate: Date;
   name: string;
@@ -15,6 +12,35 @@ export class Ng2File implements IFileData {
   type: string;
 
   constructor() {}
+
+  setLoadingProgress(progress: number) {
+    if (progress < 0 || progress > 100) {
+      throw new Error(`Ng2File progress should be a number and be equal some value in [0-100].
+      {${progress}} value was given.`);
+    }
+
+    this.loadingProgress = progress;
+  }
+
+  getLoadingProgress(): number {
+    return this.loadingProgress;
+  }
+
+  setHash(hash: string) {
+    this.hash = hash;
+  }
+
+  getHash(): string {
+    return this.hash;
+  }
+
+  setNativeFile(file: IFileData) {
+    this.nativeFile = file;
+  }
+
+  getNativeFile(): IFileData {
+    return this.nativeFile;
+  }
 
   /**
    * compares given file with native File of current object.
@@ -27,35 +53,5 @@ export class Ng2File implements IFileData {
     return this.name === file.name &&
       this.size === file.size &&
       this.type === file.type;
-  }
-
-  // getters and setters
-  get hash(): string {
-    return this._hash;
-  }
-
-  set hash(value: string) {
-    this._hash = value;
-  }
-
-  get loadingProgress(): number {
-    return this._loadingProgress;
-  }
-
-  set loadingProgress(progress: number) {
-    if (progress < 0 || progress > 100) {
-      throw new Error(`Ng2File progress should be a number and be equal some value in [0-100].
-      {${progress}} value was given.`);
-    }
-
-    this._loadingProgress = progress;
-  }
-
-  get nativeFile(): IFileData {
-    return this._nativeFile;
-  }
-
-  set nativeFile(value: IFileData) {
-    this._nativeFile = value;
   }
 }

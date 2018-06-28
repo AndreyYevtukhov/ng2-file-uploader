@@ -1,17 +1,19 @@
-import {Ng2File} from './Ng2File';
-import {IFileData} from './IFileData';
+import {Ng2File} from '../Ng2File/Ng2File';
+import {IFileData} from '../Ng2File/IFileData';
+import {INg2FileFactory} from "./INg2FileFactory";
+import {Ng2FileAdapter} from "../Ng2FileAdapter/Ng2FileAdapter";
 
 /**
  * builds Ng2File objects
  */
-export class Ng2FileBuilder {
+export class Ng2FileFactory implements INg2FileFactory {
   /**
    * builds file, that has been added by user, but hasn't been loaded yet
    *
    * @param {IFileData} fileData
    * @return {Ng2File}
    */
-  buildFile(fileData: IFileData): Ng2File {
+  createFile(fileData: IFileData): Ng2File {
     return this.buildFilePart(fileData);
   }
 
@@ -22,12 +24,16 @@ export class Ng2FileBuilder {
    * @param {IFileData} fileData
    * @return {Ng2File}
    */
-  buildLoadedFile(fileData: IFileData): Ng2File {
+  createLoadedFile(fileData: IFileData): Ng2File {
     let ng2File = this.buildFilePart(fileData);
 
-    ng2File.loadingProgress = 100;
+    ng2File.setLoadingProgress(100);
 
     return ng2File;
+  }
+
+  createFileAdapter(): Ng2FileAdapter {
+    return new Ng2FileAdapter();
   }
 
   /**
@@ -46,7 +52,7 @@ export class Ng2FileBuilder {
 
     // save native File object
     if (fileData instanceof File) {
-      ng2File.nativeFile = fileData;
+      ng2File.setNativeFile(fileData);
     }
 
     return ng2File;

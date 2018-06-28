@@ -4,6 +4,7 @@ import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import {Ng2AsyncFileUploaderConfig} from '../../../_domain/Ng2Config/uploader/async/Ng2AsyncFileUploaderConfig';
 import {HttpEventType, HttpResponse} from '@angular/common/http';
 import {Ng2File} from '../../../_domain/Ng2File/Ng2File';
+import {INg2FileAdapter} from "../../../_domain/Ng2FileAdapter/INg2FileAdapter";
 
 @Component({
   selector: 'ng2-default-async-file-uploader',
@@ -21,14 +22,18 @@ export class Ng2DefaultAsyncFileUploaderComponent extends Ng2DefaultFileUploader
   @Input('config') config: Ng2AsyncFileUploaderConfig;
   @Output('isFileProcessing') isFileProcessing: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+  private ng2FileAdapter: INg2FileAdapter;
+
   constructor(injector: Injector) {
     super(injector);
+
+    this.ng2FileAdapter = this.ng2FileFactory.createFileAdapter();
   }
 
   protected addFile(file: File) {
     this.isFileProcessing.emit(true);
 
-    let newFile = this.ng2FileBuilder.buildFile(file);
+    let newFile = this.ng2FileFactory.createFile(file);
     this.uploadedFiles.push(newFile);
 
     const newFileIndex = this.uploadedFiles.length - 1;
@@ -37,15 +42,14 @@ export class Ng2DefaultAsyncFileUploaderComponent extends Ng2DefaultFileUploader
       .subscribe(
         event => {
           if (event.type === HttpEventType.UploadProgress) {
-            newFile.loadingProgress = Math.round(100 * event.loaded / event.total);
+            newFile.setLoadingProgress(Math.round(100 * event.loaded / event.total));
           } else if (event instanceof HttpResponse) {
-            if (event.body['id']) {
-              newFile.loadingProgress = 100;
-              newFile.hash = event.body['id'];
+            try {
+              this.ng2FileAdapter.updateFile(newFile, event.body);
 
               this.isFileProcessing.emit(false);
               this.propagateChange(this.uploadedFiles);
-            } else {
+            } catch (e) {
               this.processUploadError(newFile, newFileIndex);
             }
           }

@@ -25,6 +25,10 @@ export class Ng2FileUploaderService {
   }
 
   uploadFile(file: File, uploadUrl: string): Observable<any> {
+    if (!uploadUrl) {
+      throw new Error(`[uploadUrl] is not defined! Check async file uploader config!`);
+    }
+
     let formData = new FormData();
 
     formData.append('file', file);
@@ -37,6 +41,10 @@ export class Ng2FileUploaderService {
   }
 
   deleteFile(file: Ng2File, deleteUrl: string): Observable<any> {
+    if (!deleteUrl) {
+      throw new Error(`[deleteUrl] is not defined! Check async file uploader config!`);
+    }
+
     return this.httpClient.delete(`${deleteUrl}/${file.hash}`);
   }
 
