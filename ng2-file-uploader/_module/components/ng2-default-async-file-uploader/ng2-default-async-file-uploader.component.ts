@@ -74,7 +74,7 @@ export class Ng2DefaultAsyncFileUploaderComponent extends Ng2DefaultFileUploader
 
           this.isFileProcessing.emit(false);
         }, error => {
-          this.processDeleteError(file, fileIndex)
+          this.processDeleteError(file)
         }
       );
   }
@@ -85,9 +85,8 @@ export class Ng2DefaultAsyncFileUploaderComponent extends Ng2DefaultFileUploader
     this.isFileProcessing.emit(false);
   }
 
-  private processDeleteError(file: Ng2File, fileIndex: number) {
+  private processDeleteError(file: Ng2File) {
     this.showFileError(`Error while deleting file [${file.name}]`);
-    this.removeFileFromUploadedFiles(fileIndex);
     this.isFileProcessing.emit(false);
   }
 
