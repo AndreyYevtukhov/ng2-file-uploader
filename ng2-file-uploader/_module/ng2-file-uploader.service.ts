@@ -73,5 +73,9 @@ export class Ng2FileUploaderService {
     if (fileRequirements.extension && fileRequirements.extension.value.indexOf(fileExtension) === -1) {
       return fileRequirements.extension.errorMessage;
     }
+
+    if (fileRequirements.maxFileNameLength && file.name.length > fileRequirements.maxFileNameLength.value) {
+      return fileRequirements.maxFileNameLength.errorMessage;
+    }
   }
 }

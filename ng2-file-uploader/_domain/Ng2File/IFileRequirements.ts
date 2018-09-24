@@ -14,5 +14,9 @@ export interface IFileRequirements {
   extension?: {
     value: Array<string>,
     errorMessage: string
+  },
+  maxFileNameLength?: {
+    value: number,
+    errorMessage: string
   }
 }
