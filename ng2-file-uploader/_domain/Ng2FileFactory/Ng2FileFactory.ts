@@ -49,14 +49,6 @@ export class Ng2FileFactory implements INg2FileFactory {
     ng2File.type = fileData.type;
     ng2File.size = fileData.size;
 
-    if (fileData.lastModifiedDate) {
-      ng2File.lastModifiedDate = fileData.lastModifiedDate;
-    }
-
-    if (fileData.lastModified) {
-      ng2File.lastModified = fileData.lastModified;
-    }
-
     // save native File object
     if (fileData instanceof File) {
       ng2File.setNativeFile(fileData);

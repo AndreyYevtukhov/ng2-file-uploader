@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {IFileRequirements} from '../_domain/Ng2File/IFileRequirements';
-import {Observable} from 'rxjs/Observable';
+import {Observable} from "rxjs/internal/Observable";
 import {HttpClient, HttpRequest} from '@angular/common/http';
 import {Ng2File} from '../_domain/Ng2File/Ng2File';
 

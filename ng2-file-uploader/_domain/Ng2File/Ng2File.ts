@@ -6,8 +6,6 @@ export class Ng2File implements INg2File {
   hash: string;
   nativeFile: IFileData;
 
-  lastModified: number;
-  lastModifiedDate: Date;
   name: string;
   size: number;
   type: string;

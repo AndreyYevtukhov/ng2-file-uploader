@@ -4,7 +4,7 @@
   "description": "file uploader for Angular",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AndreyYevtukhov/ng2-file-uploader.git"
+    "url": "git+https://github.com/AndreyYevtukhov/ng2-file-uploader"
   },
   "author": "a.yevtukhov@gmail.com",
   "license": "ISC",
