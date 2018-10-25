@@ -10,5 +10,6 @@ export interface IFileData {
   name: string,
   type: string,
   size: number,
-  lastModifiedDate: Date
+  lastModifiedDate?: Date,
+  lastModified?: number
 }
