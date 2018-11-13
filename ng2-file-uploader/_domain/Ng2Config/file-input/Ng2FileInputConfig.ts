@@ -1,9 +1,9 @@
 export class Ng2FileInputConfig {
-  public inputId: number;
+  public inputId: string;
   public isMultiple: boolean;
   public labelHtml: string;
 
   constructor () {
-    this.inputId = Date.now();
+    this.inputId = Math.random().toString(36).substring(7);
   }
 }
